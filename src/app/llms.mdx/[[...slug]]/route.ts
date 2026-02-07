@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLLMText, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 

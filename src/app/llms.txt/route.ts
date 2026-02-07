@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { source } from '@/lib/source';
 
 export const revalidate = false;
