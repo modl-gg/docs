@@ -1,9 +1,10 @@
-export const runtime = 'edge';
-
 import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { generate as DefaultImage } from 'fumadocs-ui/og';
+
+export const revalidate = false;
+export const dynamicParams = false;
 
 export async function GET(_req: Request, { params }: RouteContext<'/og/[...slug]'>) {
   const { slug } = await params;
@@ -17,4 +18,11 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/[...slug]
       height: 630,
     },
   );
+}
+
+export function generateStaticParams() {
+  return source.getPages().map((page) => ({
+    lang: page.locale,
+    slug: getPageImage(page).segments,
+  }));
 }
