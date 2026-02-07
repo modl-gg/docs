@@ -15,5 +15,8 @@ export function baseOptions(): BaseLayoutProps {
       title: <Logo />,
       url: 'https://modl.gg',
     },
+    searchToggle: {
+      enabled: false,
+    },
   };
 }
