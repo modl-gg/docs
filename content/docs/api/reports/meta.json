@@ -1,0 +1,4 @@
+{
+  "title": "Reports",
+  "pages": ["list", "player-reports", "assign", "dismiss", "resolve"]
+}

@@ -1,0 +1,77 @@
+---
+title: Player Login
+description: Report a player login and receive active punishments and notifications.
+---
+
+## `POST` /v1/minecraft/players/login
+
+Report a player login event to the modl platform. Returns any active punishments that should be enforced and any pending notifications for the player.
+
+If the player does not yet exist in the system, they will be created automatically and the response will return a `201 Created` status. Otherwise, the response returns `200 OK`.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `minecraftUUID` | string | Yes | The player's UUID in standard format (e.g., `550e8400-e29b-41d4-a716-446655440000`). |
+| `username` | string | Yes | The player's current Minecraft username. |
+| `ip` | string | Yes | The player's IP address. |
+
+```json
+{
+  "minecraftUUID": "550e8400-e29b-41d4-a716-446655440000",
+  "username": "Notch",
+  "ip": "192.168.1.1"
+}
+```
+
+### Response
+
+#### `201 Created` (new player) or `200 OK` (existing player)
+
+```json
+{
+  "status": 201,
+  "activePunishments": [
+    {
+      "id": "abc123",
+      "type": "Cheating",
+      "category": "BAN",
+      "ordinal": 14,
+      "started": true,
+      "expiration": 1700000000000,
+      "description": "Use of unauthorized client modifications",
+      "issuerName": "StaffMember",
+      "issuedAt": 1699000000000,
+      "playerDescription": "You have been banned for cheating."
+    }
+  ],
+  "pendingNotifications": []
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. One or more fields failed validation (e.g., malformed UUID, invalid username format, or invalid IP). |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

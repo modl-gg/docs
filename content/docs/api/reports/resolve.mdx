@@ -1,0 +1,67 @@
+---
+title: Resolve Report
+description: Mark a report as resolved.
+---
+
+## `POST` /v1/minecraft/reports/\{id\}/resolve
+
+Mark a report as resolved, indicating that the issue has been addressed. Optionally link a punishment that was issued as a result of the report.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the report. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `resolvedBy` | string | No | The name of the staff member resolving the report. |
+| `resolution` | string | No | A description of how the report was resolved. |
+| `punishmentId` | string | No | The ID of a punishment that was issued as a result of this report. |
+
+```json
+{
+  "resolvedBy": "StaffMember",
+  "resolution": "Player was banned for fly hacking.",
+  "punishmentId": "punish_abc123"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. |
+| `401` | Missing or invalid API key. |
+| `404` | Report not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

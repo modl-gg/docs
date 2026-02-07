@@ -1,0 +1,70 @@
+---
+title: Update Role Permissions
+description: Update the permissions for a role.
+---
+
+## `PATCH` /v1/minecraft/roles/\{id\}/permissions
+
+Update the full set of permissions assigned to a role. This replaces the existing permission list entirely with the provided one.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the role. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `permissions` | string[] | Yes | The new list of permissions to assign to the role. This replaces all existing permissions. |
+
+```json
+{
+  "permissions": [
+    "punish",
+    "tickets.view",
+    "tickets.reply",
+    "tickets.manage",
+    "reports.view",
+    "reports.manage"
+  ]
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. Missing or invalid permissions array. |
+| `401` | Missing or invalid API key. |
+| `404` | Role not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

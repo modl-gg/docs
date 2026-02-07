@@ -1,0 +1,62 @@
+---
+title: Get Recent Punishments
+description: Retrieve punishments issued within a time window.
+---
+
+## `GET` /v1/minecraft/punishments/recent
+
+Retrieve punishments that were issued within a specified time window. Returns up to 100 punishments, ordered by most recent first.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `hours` | integer | No | `48` | Number of hours to look back. |
+
+```
+GET /v1/minecraft/punishments/recent?hours=24
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "punishments": [
+    {
+      "id": "6651a2f8e4b0c1d2e3f4a5b6",
+      "targetUuid": "069a79f4-44e9-4726-a5be-fca90e38aaf5",
+      "targetName": "Notch",
+      "issuerName": "StaffMember",
+      "typeOrdinal": 7,
+      "reason": "Use of unauthorized client modifications",
+      "duration": 604800000,
+      "createdAt": "2025-01-15T12:00:00Z",
+      "status": "active"
+    }
+  ]
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `punishments` | array | Array of punishment objects. Maximum of 100 results. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |

@@ -1,0 +1,63 @@
+---
+title: Add Punishment Note
+description: Add a note to an existing punishment record.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/note
+
+Add an internal note to an existing punishment record. Notes are visible only to staff members and are useful for tracking additional context or follow-up information related to a punishment.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to add a note to. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `issuerName` | string | Yes | The name of the staff member adding the note. |
+| `note` | string | Yes | The note content to add. |
+
+```json title="Example Request Body"
+{
+  "issuerName": "StaffMember",
+  "note": "Player submitted an appeal via Discord. Reviewing evidence."
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "success": true
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | Whether the note was added successfully. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |

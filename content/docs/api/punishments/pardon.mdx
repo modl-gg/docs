@@ -1,0 +1,66 @@
+---
+title: Pardon Punishment
+description: Pardon a specific punishment by its ID.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/pardon
+
+Pardon (revoke) a specific punishment by its ID. The punishment will be marked as pardoned and enforcement will cease on connected servers.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to pardon. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `issuerName` | string | Yes | The name of the staff member issuing the pardon. |
+| `reason` | string | No | The reason for pardoning the punishment. |
+| `expectedType` | string | No | The expected punishment type for validation. |
+
+```json title="Example Request Body"
+{
+  "issuerName": "StaffMember",
+  "reason": "Appeal accepted - insufficient evidence"
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "success": true,
+  "pardonedCount": 1
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | Whether the pardon was applied successfully. |
+| `pardonedCount` | integer | The number of punishments pardoned. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |

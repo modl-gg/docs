@@ -1,0 +1,85 @@
+---
+title: Preview Punishment
+description: Preview a punishment's calculated severity and points before issuing.
+---
+
+## `GET` /v1/minecraft/punishments/preview
+
+Preview the calculated severity, offense level, and points for a punishment before issuing it. This allows staff to see what the outcome of a punishment would be based on the player's history and the server's configured point thresholds.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `playerUuid` | string | Yes | The UUID of the player to preview the punishment for. |
+| `typeOrdinal` | integer | Yes | The punishment type ordinal (0-14). |
+
+```
+GET /v1/minecraft/punishments/preview?playerUuid=069a79f4-44e9-4726-a5be-fca90e38aaf5&typeOrdinal=7
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "status": 200,
+  "success": true,
+  "socialStatus": "Tier 1",
+  "gameplayStatus": "Tier 2",
+  "socialPoints": 3,
+  "gameplayPoints": 8,
+  "offenseLevel": "low",
+  "singleSeverity": {
+    "action": "ban",
+    "duration": 604800000
+  },
+  "lenient": {
+    "action": "ban",
+    "duration": 259200000
+  },
+  "regular": {
+    "action": "ban",
+    "duration": 604800000
+  },
+  "aggravated": {
+    "action": "ban",
+    "duration": 1209600000
+  }
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `status` | integer | HTTP status code. |
+| `success` | boolean | Whether the preview was generated successfully. |
+| `socialStatus` | string | The player's current social offender tier. |
+| `gameplayStatus` | string | The player's current gameplay offender tier. |
+| `socialPoints` | integer | The player's accumulated social offense points. |
+| `gameplayPoints` | integer | The player's accumulated gameplay offense points. |
+| `offenseLevel` | string | The calculated offense level (e.g., `"low"`, `"medium"`, `"high"`). |
+| `singleSeverity` | object | The default punishment outcome. |
+| `lenient` | object | The punishment outcome if lenient severity is selected. |
+| `regular` | object | The punishment outcome if regular severity is selected. |
+| `aggravated` | object | The punishment outcome if aggravated severity is selected. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Missing or invalid query parameters. |
+| `401` | Missing or invalid API key. |
+| `404` | Player not found. |

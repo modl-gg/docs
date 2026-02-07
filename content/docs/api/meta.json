@@ -1,0 +1,4 @@
+{
+  "title": "API Reference",
+  "pages": ["index", "...players", "...punishments", "...sync", "...notifications", "...tickets", "...reports", "...staff", "...roles", "...dashboard", "...migration"]
+}

@@ -1,0 +1,86 @@
+---
+title: Pardon Player
+description: Pardon a player's active punishments by name.
+---
+
+## `POST` /v1/minecraft/players/pardon
+
+Pardon a player's punishments by their username. You can pardon all active punishments, or target a specific punishment type (bans or mutes). A `MANUAL_PARDON` modification is recorded on each pardoned punishment for audit purposes.
+
+When `punishmentType` is omitted, only currently active punishments are pardoned. When a specific type is provided (e.g., `"ban"` or `"mute"`), both active and expired punishments of that type are pardoned (useful for removing accumulated offense points).
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `playerName` | string | Yes | The player's Minecraft username (case-insensitive). |
+| `issuerName` | string | Yes | The name of the staff member issuing the pardon. |
+| `punishmentType` | string | No | The type of punishment to pardon: `"ban"` or `"mute"`. If omitted, all active punishments are pardoned. |
+| `reason` | string | No | An optional reason for the pardon. |
+
+```json
+{
+  "playerName": "Notch",
+  "issuerName": "StaffMember",
+  "punishmentType": "ban",
+  "reason": "Appeal accepted - insufficient evidence"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true,
+  "pardonedCount": 1,
+  "message": "Pardoned 1 punishment(s)"
+}
+```
+
+When no punishments match:
+
+```json
+{
+  "status": 200,
+  "success": false,
+  "pardonedCount": 0,
+  "message": "No punishments found to pardon"
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | `true` if at least one punishment was pardoned, `false` otherwise. |
+| `pardonedCount` | integer | The number of punishments that were pardoned. |
+| `message` | string | A human-readable summary of the result. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given username. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

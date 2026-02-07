@@ -1,0 +1,73 @@
+---
+title: Get Staff Permissions
+description: Retrieve in-game staff members with their permissions for the plugin.
+---
+
+## `GET` /v1/minecraft/staff/permissions
+
+Retrieve a list of in-game staff members along with their Minecraft UUIDs and associated permissions. This endpoint is designed for the Minecraft plugin to synchronize staff permissions for in-game authorization.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+This endpoint takes no additional parameters.
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "data": {
+    "staff": [
+      {
+        "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+        "username": "StaffMember",
+        "role": "Moderator",
+        "permissions": [
+          "punish",
+          "tickets.view",
+          "tickets.reply",
+          "reports.view"
+        ]
+      },
+      {
+        "minecraftUuid": "660e8400-e29b-41d4-a716-446655440001",
+        "username": "AdminUser",
+        "role": "Admin",
+        "permissions": [
+          "punish",
+          "tickets.view",
+          "tickets.reply",
+          "tickets.manage",
+          "reports.view",
+          "reports.manage",
+          "staff.manage",
+          "roles.manage"
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

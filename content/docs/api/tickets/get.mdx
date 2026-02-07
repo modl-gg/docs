@@ -1,0 +1,75 @@
+---
+title: Get Ticket
+description: Retrieve a specific ticket by ID.
+---
+
+## `GET` /v1/minecraft/tickets/\{id\}
+
+Retrieve full details for a specific ticket by its ID, including all replies and metadata.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the ticket. |
+
+```
+GET /v1/minecraft/tickets/ticket_abc123
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "ticket": {
+    "id": "ticket_abc123",
+    "type": "player",
+    "subject": "Player using fly hacks",
+    "description": "Observed player flying in survival mode near spawn.",
+    "status": "Open",
+    "priority": "high",
+    "creatorUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "creatorName": "Notch",
+    "reportedPlayerUuid": "660e8400-e29b-41d4-a716-446655440001",
+    "reportedPlayerName": "Hacker123",
+    "tags": ["cheating", "fly"],
+    "replies": [
+      {
+        "id": "reply_001",
+        "authorName": "StaffMember",
+        "message": "Looking into this now.",
+        "createdAt": "2024-01-15T12:30:00Z"
+      }
+    ],
+    "createdAt": "2024-01-15T12:00:00Z",
+    "updatedAt": "2024-01-15T12:30:00Z"
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Ticket not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

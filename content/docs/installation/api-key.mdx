@@ -1,0 +1,45 @@
+---
+title: API Key Configuration
+description: Obtain and configure your API key for the modl plugin.
+---
+
+## Getting Your API Key
+
+1. Log in to your modl panel at `yourserver.modl.gg`.
+2. Navigate to **Settings**.
+3. Locate the **API Key** section.
+4. Copy the generated API key to your clipboard.
+
+## Adding the Key to Your Plugin
+
+1. Open the modl plugin configuration file on your server, located at `plugins/modl/config.yml`.
+2. Set the `api-key` field to the value you copied from the panel:
+
+```yaml
+api-key: "your-api-key-here"
+```
+
+3. Save the file and restart your server for the changes to take effect.
+
+## Key Security Best Practices
+
+Your API key grants full access to your server's modl integration. Follow these guidelines to keep it secure:
+
+- **Do not share your API key** with anyone who does not need direct access to your server configuration.
+- **Do not commit your API key** to version control or post it in public channels.
+- **Rotate your key immediately** if you believe it has been compromised. You can generate a new key from the panel settings page, which will invalidate the old one.
+- **Restrict file access** to `config.yml` so that only server administrators can read it.
+
+## Verifying the Connection
+
+After configuring the API key and restarting your server:
+
+1. Run the `/modl` command in-game or from the server console.
+2. The plugin should report a successful connection to the modl platform.
+3. Check the server logs for confirmation that the plugin has authenticated with the API.
+
+If the connection fails, double-check that:
+
+- The API key is copied correctly with no extra spaces or characters.
+- Your server has outbound network access to `api.modl.gg`.
+- The key has not been rotated or revoked in the panel.

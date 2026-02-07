@@ -1,0 +1,62 @@
+---
+title: Acknowledge Punishment
+description: Mark a punishment as acknowledged and started on the server.
+---
+
+## `POST` /v1/minecraft/punishments/acknowledge
+
+Mark a punishment as acknowledged by the server, indicating that the punishment has been received and enforcement has begun. This is typically called by the Minecraft plugin after successfully applying a punishment to a player.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to acknowledge. |
+| `playerUuid` | string | Yes | The UUID of the punished player. |
+| `executedAt` | string | No | ISO 8601 timestamp of when the punishment was executed on the server. |
+| `success` | boolean | Yes | Whether the punishment was successfully applied. |
+| `errorMessage` | string | No | Error details if the punishment failed to apply. |
+
+```json title="Example Request Body"
+{
+  "punishmentId": "6651a2f8e4b0c1d2e3f4a5b6",
+  "playerUuid": "069a79f4-44e9-4726-a5be-fca90e38aaf5",
+  "executedAt": "2025-01-15T12:00:00Z",
+  "success": true
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "message": "Punishment acknowledged successfully."
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `message` | string | A human-readable success message. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |

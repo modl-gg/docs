@@ -1,0 +1,67 @@
+---
+title: List Reports
+description: Retrieve reports with optional status filter.
+---
+
+## `GET` /v1/minecraft/reports
+
+Retrieve a list of reports with optional filtering by status. Results are returned in reverse chronological order.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `status` | string | No | Filter by report status. Default: `open`. |
+| `limit` | integer | No | Maximum number of reports to return. Default: `50`, max: `100`. |
+
+```
+GET /v1/minecraft/reports?status=open&limit=25
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "reports": [
+    {
+      "id": "report_abc123",
+      "reporterUuid": "550e8400-e29b-41d4-a716-446655440000",
+      "reporterName": "Notch",
+      "reportedPlayerUuid": "660e8400-e29b-41d4-a716-446655440001",
+      "reportedPlayerName": "Hacker123",
+      "reason": "Fly hacking in survival",
+      "status": "open",
+      "assignee": null,
+      "createdAt": "2024-01-15T12:00:00Z",
+      "updatedAt": "2024-01-15T12:00:00Z"
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid query parameters. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

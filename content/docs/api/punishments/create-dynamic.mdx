@@ -1,0 +1,71 @@
+---
+title: Create Punishment (Dynamic)
+description: Issue a punishment and receive the punishment ID in the response.
+---
+
+## `POST` /v1/minecraft/punishments/dynamic
+
+Issue a punishment to a player and receive the generated punishment ID in the response. This is useful when you need to reference the punishment immediately after creation, such as attaching evidence or linking it to other records.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targetUuid` | string | Yes | The UUID of the player to punish. |
+| `issuerName` | string | Yes | The name of the staff member issuing the punishment. |
+| `typeOrdinal` | integer | Yes | The punishment type ordinal (0-14). |
+| `reason` | string | No | The reason for the punishment. |
+| `duration` | long | No | Duration in milliseconds. Use `-1` for permanent. |
+| `data` | object | No | Additional data to attach to the punishment. |
+| `notes` | string[] | No | Internal notes visible only to staff. |
+| `attachedTicketIds` | string[] | No | IDs of tickets to link to this punishment. |
+| `severity` | string | No | Severity level: `"lenient"`, `"regular"`, or `"aggravated"`. |
+| `status` | string | No | Initial status of the punishment. |
+
+```json title="Example Request Body"
+{
+  "targetUuid": "069a79f4-44e9-4726-a5be-fca90e38aaf5",
+  "issuerName": "StaffMember",
+  "typeOrdinal": 7,
+  "reason": "Use of unauthorized client modifications",
+  "duration": 604800000,
+  "severity": "regular"
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "punishmentId": "6651a2f8e4b0c1d2e3f4a5b6",
+  "message": "Punishment created successfully."
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `punishmentId` | string | The unique ID of the newly created punishment. |
+| `message` | string | A human-readable success message. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Target player not found. |

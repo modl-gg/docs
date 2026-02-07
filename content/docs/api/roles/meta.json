@@ -1,0 +1,4 @@
+{
+  "title": "Roles",
+  "pages": ["list", "get", "update-permissions"]
+}

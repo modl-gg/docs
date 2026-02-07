@@ -1,0 +1,84 @@
+---
+title: Get Player Reports
+description: Retrieve all reports filed against a specific player.
+---
+
+## `GET` /v1/minecraft/players/\{uuid\}/reports
+
+Retrieve all reports that have been filed against a specific player. Results are limited to a maximum of 50 reports, ordered by the database's default sort.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The reported player's Minecraft UUID. |
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "reports": [
+    {
+      "id": "ticket789",
+      "type": "REPORT",
+      "reporterName": "WitnessPlayer",
+      "reporterUuid": "7b2f9400-e29b-41d4-a716-446655440002",
+      "subject": "Fly hacking in SkyWars",
+      "status": "OPEN",
+      "priority": "HIGH",
+      "createdAt": "2024-01-14T16:30:00.000Z"
+    },
+    {
+      "id": "ticket790",
+      "type": "REPORT",
+      "reporterName": "AnotherPlayer",
+      "reporterUuid": "8c3g0500-f30c-52e5-b827-557766551003",
+      "subject": "Inappropriate language",
+      "status": "RESOLVED",
+      "priority": "MEDIUM",
+      "createdAt": "2024-01-10T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `reports` | array | List of reports filed against the player (max 50). |
+| `reports[].id` | string | The report/ticket ID. |
+| `reports[].type` | string | The ticket type (e.g., `REPORT`). |
+| `reports[].reporterName` | string | Username of the player who filed the report. |
+| `reports[].reporterUuid` | string | UUID of the player who filed the report. |
+| `reports[].subject` | string | The report subject or description. |
+| `reports[].status` | string | Current report status (e.g., `OPEN`, `RESOLVED`, `CLOSED`). |
+| `reports[].priority` | string | Report priority level (e.g., `LOW`, `MEDIUM`, `HIGH`). |
+| `reports[].createdAt` | string | ISO 8601 timestamp of when the report was created. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

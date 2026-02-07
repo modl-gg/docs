@@ -1,0 +1,70 @@
+---
+title: Get Player by Name
+description: Look up a player by their Minecraft username (case-insensitive).
+---
+
+## `GET` /v1/minecraft/players/by-name
+
+Look up a player by their Minecraft username. The search is case-insensitive and matches against the player's full username history.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `username` | string | Yes | The player's Minecraft username (case-insensitive). |
+
+#### Example
+
+```
+GET /v1/minecraft/players/by-name?username=Notch
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "message": "Player found",
+  "player": {
+    "_id": "65a1b2c3d4e5f6a7b8c9d0e1",
+    "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "usernames": [
+      {
+        "username": "Notch",
+        "date": "2024-01-15T10:30:00.000Z"
+      }
+    ],
+    "notes": [],
+    "ipList": [],
+    "punishments": [],
+    "pendingNotifications": []
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given username. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

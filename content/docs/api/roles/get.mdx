@@ -1,0 +1,69 @@
+---
+title: Get Role
+description: Retrieve a specific role by ID.
+---
+
+## `GET` /v1/minecraft/roles/\{id\}
+
+Retrieve full details for a specific role by its ID, including all assigned permissions.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the role. |
+
+```
+GET /v1/minecraft/roles/role_002
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "role": {
+    "id": "role_002",
+    "name": "Admin",
+    "order": 2,
+    "color": "#FF8800",
+    "permissions": [
+      "punish",
+      "tickets.view",
+      "tickets.reply",
+      "tickets.manage",
+      "reports.view",
+      "reports.manage",
+      "staff.manage"
+    ],
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2024-01-10T08:00:00Z"
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Role not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

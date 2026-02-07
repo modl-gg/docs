@@ -1,0 +1,4 @@
+{
+  "title": "Players",
+  "pages": ["login", "disconnect", "online", "get-by-uuid", "query", "get-by-name", "lookup", "notes", "linked-accounts", "reports", "pardon"]
+}

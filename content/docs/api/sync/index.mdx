@@ -1,0 +1,97 @@
+---
+title: Sync
+description: Synchronize player data, punishments, and notifications with the server.
+---
+
+## `POST` /v1/minecraft/players/sync
+
+Synchronize player data, punishments, and notifications between the Minecraft server plugin and the modl platform. This endpoint should be called periodically to keep the server in sync with the latest moderation actions and player notifications.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `lastSyncTimestamp` | string | No | ISO 8601 timestamp of the last successful sync. Used to retrieve only changes since that time. |
+| `onlinePlayers` | array | No | List of currently online players. Each object contains `uuid`, `username`, and `ipAddress`. |
+| `serverStatus` | object | No | Current server status information. |
+
+##### `onlinePlayers` Object
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+| `username` | string | Yes | The player's current username. |
+| `ipAddress` | string | Yes | The player's IP address. |
+
+##### `serverStatus` Object
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `onlinePlayerCount` | integer | No | Number of players currently online. |
+| `maxPlayers` | integer | No | Maximum player capacity of the server. |
+| `serverVersion` | string | No | The Minecraft server version string. |
+| `timestamp` | string | No | ISO 8601 timestamp of the status report. |
+
+```json
+{
+  "lastSyncTimestamp": "2024-01-15T12:00:00Z",
+  "onlinePlayers": [
+    {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "Notch",
+      "ipAddress": "192.168.1.1"
+    }
+  ],
+  "serverStatus": {
+    "onlinePlayerCount": 42,
+    "maxPlayers": 100,
+    "serverVersion": "1.21.1",
+    "timestamp": "2024-01-15T12:00:00Z"
+  }
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "timestamp": "2024-01-15T12:00:05Z",
+  "data": {
+    "pendingPunishments": [],
+    "recentlyStartedPunishments": [],
+    "recentlyModifiedPunishments": [],
+    "playerNotifications": [],
+    "activeStaffMembers": [],
+    "staffPermissionsUpdatedAt": null,
+    "punishmentTypesUpdatedAt": null
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. One or more fields failed validation. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

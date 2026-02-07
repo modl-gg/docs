@@ -1,0 +1,65 @@
+---
+title: Get Online Players
+description: Retrieve the list of currently online players.
+---
+
+## `GET` /v1/minecraft/players/online
+
+Retrieve all players currently marked as online on your server. Results are limited to a maximum of 500 players.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+No request body is required for this endpoint.
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "players": [
+    {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "Notch",
+      "joinedAt": "2024-01-15T10:30:00.000Z"
+    },
+    {
+      "uuid": "6a1e8400-e29b-41d4-a716-446655440001",
+      "username": "jeb_",
+      "joinedAt": "2024-01-15T11:00:00.000Z"
+    }
+  ]
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `players` | array | List of currently online players (max 500). |
+| `players[].uuid` | string | The player's Minecraft UUID. |
+| `players[].username` | string | The player's current username. |
+| `players[].joinedAt` | string | ISO 8601 timestamp of when the player last logged in. May be `null` if unavailable. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

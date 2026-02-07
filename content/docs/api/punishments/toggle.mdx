@@ -1,0 +1,65 @@
+---
+title: Toggle Option
+description: Toggle punishment options such as alt-blocking or stat wipe.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/toggle
+
+Toggle specific options on a punishment, such as alt-blocking (preventing alt accounts from joining) or stat wipe (resetting the player's statistics).
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to modify. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `issuerName` | string | Yes | The name of the staff member toggling the option. |
+| `option` | string | Yes | The option to toggle. Must be `"ALT_BLOCKING"` or `"STAT_WIPE"`. |
+| `enabled` | boolean | Yes | Whether to enable or disable the option. |
+
+```json title="Example Request Body"
+{
+  "issuerName": "StaffMember",
+  "option": "ALT_BLOCKING",
+  "enabled": true
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "success": true
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | Whether the option was toggled successfully. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid option value. Must be `"ALT_BLOCKING"` or `"STAT_WIPE"`. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |

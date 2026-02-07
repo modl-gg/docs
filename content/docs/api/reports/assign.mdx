@@ -1,0 +1,63 @@
+---
+title: Assign Report
+description: Assign a report to a staff member.
+---
+
+## `POST` /v1/minecraft/reports/\{id\}/assign
+
+Assign an open report to a staff member for review. This helps coordinate moderation efforts by indicating who is responsible for handling a specific report.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the report. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `assignee` | string | Yes | The name of the staff member to assign the report to. |
+
+```json
+{
+  "assignee": "StaffMember"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. Missing or invalid assignee. |
+| `401` | Missing or invalid API key. |
+| `404` | Report not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

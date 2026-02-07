@@ -1,0 +1,53 @@
+---
+title: Dashboard Stats
+description: Retrieve dashboard statistics including player counts, active punishments, and open tickets.
+---
+
+## `GET` /v1/minecraft/dashboard/stats
+
+Retrieve real-time dashboard statistics for the server, including player counts, active punishment totals, and unresolved ticket and report counts. This endpoint is designed to power dashboard overview widgets.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+This endpoint takes no additional parameters.
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "stats": {
+    "unresolvedReports": 0,
+    "unresolvedTickets": 0,
+    "onlineStaff": 0,
+    "onlinePlayers": 0,
+    "activeBans": 0,
+    "activeMutes": 0,
+    "totalActivePunishments": 0,
+    "totalPlayers": 0
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

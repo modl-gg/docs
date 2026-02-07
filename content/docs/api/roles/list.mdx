@@ -1,0 +1,89 @@
+---
+title: List Roles
+description: Retrieve all staff roles sorted by order.
+---
+
+## `GET` /v1/minecraft/roles
+
+Retrieve a list of all staff roles configured for the server. Roles are returned sorted by their order value in ascending order, with lower values representing higher authority.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+This endpoint takes no additional parameters.
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "roles": [
+    {
+      "id": "role_001",
+      "name": "Owner",
+      "order": 1,
+      "color": "#FF0000",
+      "permissions": [
+        "punish",
+        "tickets.view",
+        "tickets.reply",
+        "tickets.manage",
+        "reports.view",
+        "reports.manage",
+        "staff.manage",
+        "roles.manage",
+        "settings.manage"
+      ]
+    },
+    {
+      "id": "role_002",
+      "name": "Admin",
+      "order": 2,
+      "color": "#FF8800",
+      "permissions": [
+        "punish",
+        "tickets.view",
+        "tickets.reply",
+        "tickets.manage",
+        "reports.view",
+        "reports.manage",
+        "staff.manage"
+      ]
+    },
+    {
+      "id": "role_003",
+      "name": "Moderator",
+      "order": 3,
+      "color": "#00FF00",
+      "permissions": [
+        "punish",
+        "tickets.view",
+        "tickets.reply",
+        "reports.view"
+      ]
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

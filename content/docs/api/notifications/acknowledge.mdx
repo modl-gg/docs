@@ -1,0 +1,64 @@
+---
+title: Acknowledge Notifications
+description: Mark player notifications as acknowledged.
+---
+
+## `POST` /v1/minecraft/notifications/acknowledge
+
+Mark one or more player notifications as acknowledged. This is typically called after the plugin has displayed the notifications to the player in-game.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `playerUuid` | string | Yes | The UUID of the player whose notifications are being acknowledged. |
+| `notificationIds` | string[] | Yes | Array of notification IDs to mark as acknowledged. |
+| `acknowledgedAt` | string | No | ISO 8601 timestamp of when the notifications were acknowledged. Defaults to the current server time if not provided. |
+
+```json
+{
+  "playerUuid": "550e8400-e29b-41d4-a716-446655440000",
+  "notificationIds": [
+    "notif_abc123",
+    "notif_def456"
+  ],
+  "acknowledgedAt": "2024-01-15T12:00:00Z"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Notifications acknowledged successfully."
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. Missing required fields or malformed data. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

@@ -1,0 +1,62 @@
+---
+title: API Overview
+description: Overview of the modl Developer API including authentication, base URL, and response format.
+---
+
+import { Cards, Card } from "fumadocs-ui/components/card";
+
+## Base URL
+
+All API requests are made to the following base URL:
+
+```
+https://api.modl.gg/v1/minecraft
+```
+
+## Authentication
+
+All requests require the `X-API-Key` header with your server's API key. You can obtain your API key from your server's panel settings.
+
+```
+X-API-Key: your-api-key-here
+```
+
+## Multi-Tenancy
+
+Requests are automatically scoped to the server associated with your API key. You do not need to specify a server ID or domain in your requests.
+
+## Response Format
+
+All responses are returned as JSON with appropriate HTTP status codes.
+
+## Common Error Codes
+
+| Status Code | Description |
+|---|---|
+| `400` | **Bad Request** -- Your request is malformed or missing required fields. |
+| `401` | **Unauthorized** -- Missing or invalid API key. |
+| `403` | **Forbidden** -- Insufficient permissions for this action. |
+| `404` | **Not Found** -- The requested resource does not exist. |
+| `409` | **Conflict** -- The request conflicts with the current state of the resource. |
+| `413` | **Payload Too Large** -- The request body exceeds the maximum allowed size. |
+| `429` | **Rate Limited** -- You have exceeded the rate limit. Slow down and retry after the indicated time. |
+| `500` | **Internal Server Error** -- Something went wrong on our end. Try again later. |
+
+## Rate Limiting
+
+API requests are subject to rate limiting. If you receive a `429` response, wait before retrying. Rate limit details are included in the response headers.
+
+## API Categories
+
+<Cards>
+  <Card title="Players" href="/docs/api/players/login" description="Look up players, manage notes, linked accounts, and more." />
+  <Card title="Punishments" href="/docs/api/punishments/create" description="Create, pardon, and manage player punishments." />
+  <Card title="Sync" href="/docs/api/sync" description="Synchronize data between your server and modl." />
+  <Card title="Notifications" href="/docs/api/notifications/acknowledge" description="Acknowledge and manage notifications." />
+  <Card title="Tickets" href="/docs/api/tickets/create" description="Create and manage support tickets." />
+  <Card title="Reports" href="/docs/api/reports/list" description="List, assign, and resolve player reports." />
+  <Card title="Staff" href="/docs/api/staff/list" description="Manage staff members and their permissions." />
+  <Card title="Roles" href="/docs/api/roles/list" description="Manage roles and role permissions." />
+  <Card title="Dashboard" href="/docs/api/dashboard/stats" description="Retrieve dashboard statistics." />
+  <Card title="Migration" href="/docs/api/migration/upload" description="Upload and track data migrations." />
+</Cards>

@@ -1,0 +1,67 @@
+---
+title: Claim Ticket
+description: Link an unlinked ticket to a player account.
+---
+
+## `POST` /v1/minecraft/tickets/\{id\}/claim
+
+Link an unlinked or unclaimed ticket to a player account. This is used when a ticket was created externally (e.g., via the web panel) and needs to be associated with a Minecraft player who logs in.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the ticket to claim. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `playerUuid` | string | Yes | The Minecraft UUID of the player claiming the ticket. |
+| `playerName` | string | Yes | The current username of the player claiming the ticket. |
+
+```json
+{
+  "playerUuid": "550e8400-e29b-41d4-a716-446655440000",
+  "playerName": "Notch"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Ticket claimed successfully."
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. Missing required fields or malformed UUID. |
+| `401` | Missing or invalid API key. |
+| `404` | Ticket not found. |
+| `409` | Ticket has already been claimed by another player. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

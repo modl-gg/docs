@@ -1,0 +1,61 @@
+---
+title: Get Punishment Types
+description: Retrieve all configured punishment types for the server.
+---
+
+## `GET` /v1/minecraft/punishments/types
+
+Retrieve all punishment types configured for your server. Punishment types define the categories of infractions (e.g., cheating, chat abuse, targeting) and their associated ordinals used when creating punishments.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+No additional parameters are required.
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "data": [
+    {
+      "ordinal": 6,
+      "title": "Chat Abuse",
+      "category": "social",
+      "enabled": true
+    },
+    {
+      "ordinal": 7,
+      "title": "Anti Social",
+      "category": "social",
+      "enabled": true
+    },
+    {
+      "ordinal": 14,
+      "title": "Cheating",
+      "category": "gameplay",
+      "enabled": true
+    }
+  ]
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `data` | array | Array of punishment type configuration objects. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |

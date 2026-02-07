@@ -1,0 +1,74 @@
+---
+title: Create Ticket
+description: Create a new support ticket.
+---
+
+## `POST` /v1/minecraft/tickets
+
+Create a new support ticket on behalf of a player. Tickets can be used for player reports, bug reports, staff requests, appeals, and general support.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `creatorUuid` | string | Yes | The UUID of the player creating the ticket. |
+| `creatorName` | string | No | The username of the player creating the ticket. |
+| `type` | string | Yes | The ticket type. One of: `player`, `chat`, `staff`, `bug`, `support`, `appeal`. |
+| `subject` | string | No | A brief subject line for the ticket. |
+| `description` | string | No | A detailed description of the issue. |
+| `reportedPlayerUuid` | string | No | The UUID of the reported player (for `player` and `chat` type tickets). |
+| `reportedPlayerName` | string | No | The username of the reported player. |
+| `chatMessages` | string[] | No | Array of JSON-encoded chat message objects (for `chat` type tickets). |
+| `tags` | string[] | No | Array of tags to categorize the ticket. |
+| `priority` | string | No | The ticket priority. One of: `low`, `normal`, `high`. Defaults to `normal`. |
+
+```json
+{
+  "creatorUuid": "550e8400-e29b-41d4-a716-446655440000",
+  "creatorName": "Notch",
+  "type": "player",
+  "subject": "Player using fly hacks",
+  "description": "Observed player flying in survival mode near spawn.",
+  "reportedPlayerUuid": "660e8400-e29b-41d4-a716-446655440001",
+  "reportedPlayerName": "Hacker123",
+  "tags": ["cheating", "fly"],
+  "priority": "high"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true,
+  "ticketId": "ticket_abc123"
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. Missing required fields or invalid ticket type/priority. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

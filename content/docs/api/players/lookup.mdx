@@ -1,0 +1,100 @@
+---
+title: Player Lookup
+description: Flexible player lookup that auto-detects UUID or username input.
+---
+
+## `POST` /v1/minecraft/players/lookup
+
+Perform a flexible player lookup by providing either a Minecraft UUID or username. The API automatically detects the input type based on format (UUIDs contain hyphens and are 36 characters long). Returns an enriched response with punishment statistics and profile URLs.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `query` | string | Yes | A Minecraft UUID or username. The API auto-detects the type. |
+
+```json
+{
+  "query": "Notch"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "message": "Player found",
+  "data": {
+    "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "currentUsername": "Notch",
+    "previousUsernames": ["OldName"],
+    "firstSeen": "2023-06-01T00:00:00.000Z",
+    "lastSeen": "2024-01-15T10:30:00.000Z",
+    "isOnline": true,
+    "punishmentStats": {
+      "totalPunishments": 5,
+      "activePunishments": 1,
+      "bans": 1,
+      "mutes": 2,
+      "kicks": 1,
+      "warnings": 1
+    },
+    "recentPunishments": [
+      {
+        "id": "pun789",
+        "type": "Cheating",
+        "issuer": "StaffMember",
+        "issuedAt": "2024-01-12T14:00:00.000Z",
+        "expiresAt": "2024-02-12T14:00:00.000Z",
+        "isActive": true
+      }
+    ],
+    "profileUrl": "https://myserver.modl.gg/player/550e8400-e29b-41d4-a716-446655440000",
+    "punishmentsUrl": "https://myserver.modl.gg/player/550e8400-e29b-41d4-a716-446655440000/punishments"
+  }
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `data.minecraftUuid` | string | The player's Minecraft UUID. |
+| `data.currentUsername` | string | The player's most recent username. |
+| `data.previousUsernames` | array | List of previous usernames. |
+| `data.firstSeen` | string | ISO 8601 timestamp of the player's first recorded login. |
+| `data.lastSeen` | string | ISO 8601 timestamp of the player's most recent recorded login. |
+| `data.isOnline` | boolean | Whether the player is currently online. |
+| `data.punishmentStats` | object | Aggregated punishment statistics. |
+| `data.recentPunishments` | array | The 5 most recent punishments. |
+| `data.profileUrl` | string | Direct URL to the player's profile on your panel. |
+| `data.punishmentsUrl` | string | Direct URL to the player's punishments page on your panel. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given query. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

@@ -1,0 +1,71 @@
+---
+title: Query Player
+description: Look up a player by their Minecraft UUID using query parameters.
+---
+
+## `GET` /v1/minecraft/players
+
+Look up a player by their Minecraft UUID provided as a query parameter. Returns the player's full profile if found.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `minecraftUuid` | string | Yes | The player's Minecraft UUID. |
+
+#### Example
+
+```
+GET /v1/minecraft/players?minecraftUuid=550e8400-e29b-41d4-a716-446655440000
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "message": "Player found",
+  "player": {
+    "_id": "65a1b2c3d4e5f6a7b8c9d0e1",
+    "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "usernames": [
+      {
+        "username": "Notch",
+        "date": "2024-01-15T10:30:00.000Z"
+      }
+    ],
+    "notes": [],
+    "ipList": [],
+    "punishments": [],
+    "pendingNotifications": []
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Missing or empty `minecraftUuid` query parameter. |
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given UUID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

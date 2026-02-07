@@ -1,0 +1,67 @@
+---
+title: Create Player Note
+description: Add a note to a player's record.
+---
+
+## `POST` /v1/minecraft/players/\{uuid\}/notes
+
+Add a staff note to a player's record. Notes are stored permanently and visible to all staff members with access to the player's profile.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `text` | string | Yes | The note content. Must not be blank. |
+| `issuerName` | string | Yes | The name of the staff member creating the note. Must not be blank. |
+
+```json
+{
+  "text": "Player was warned verbally about chat behavior",
+  "issuerName": "StaffMember"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true,
+  "message": "Note added"
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. `text` and `issuerName` must not be blank. |
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given UUID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

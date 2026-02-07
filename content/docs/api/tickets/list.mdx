@@ -1,0 +1,69 @@
+---
+title: List Tickets
+description: Retrieve tickets with optional filters.
+---
+
+## `GET` /v1/minecraft/tickets
+
+Retrieve a list of tickets with optional filtering by status and type. Results are returned in reverse chronological order.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `status` | string | No | Filter by ticket status (e.g., `Open`, `Closed`, `InProgress`). |
+| `type` | string | No | Filter by ticket type (e.g., `player`, `chat`, `bug`). |
+| `limit` | integer | No | Maximum number of tickets to return. Default: `50`, max: `100`. |
+
+```
+GET /v1/minecraft/tickets?status=Open&type=player&limit=25
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "tickets": [
+    {
+      "id": "ticket_abc123",
+      "type": "player",
+      "subject": "Player using fly hacks",
+      "status": "Open",
+      "priority": "high",
+      "creatorUuid": "550e8400-e29b-41d4-a716-446655440000",
+      "creatorName": "Notch",
+      "reportedPlayerUuid": "660e8400-e29b-41d4-a716-446655440001",
+      "reportedPlayerName": "Hacker123",
+      "createdAt": "2024-01-15T12:00:00Z",
+      "updatedAt": "2024-01-15T12:30:00Z"
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid query parameters. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

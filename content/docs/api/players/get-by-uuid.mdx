@@ -1,0 +1,102 @@
+---
+title: Get Player by UUID
+description: Retrieve a player's full profile by their Minecraft UUID.
+---
+
+## `GET` /v1/minecraft/players/\{uuid\}
+
+Retrieve a player's complete profile by their Minecraft UUID, including their username history, punishments, notes, IP addresses, and linked accounts.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "profile": {
+    "_id": "65a1b2c3d4e5f6a7b8c9d0e1",
+    "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "usernames": [
+      {
+        "username": "OldName",
+        "date": "2023-06-01T00:00:00.000Z"
+      },
+      {
+        "username": "Notch",
+        "date": "2024-01-15T10:30:00.000Z"
+      }
+    ],
+    "notes": [
+      {
+        "id": "note123",
+        "text": "Warned verbally in-game",
+        "date": "2024-01-10T08:00:00.000Z",
+        "issuerName": "StaffMember",
+        "issuerId": null
+      }
+    ],
+    "ipList": [
+      {
+        "ipAddress": "192.168.1.1",
+        "country": "US",
+        "region": "California",
+        "asn": "AS12345",
+        "proxy": false,
+        "hosting": false,
+        "firstLogin": "2023-06-01T00:00:00.000Z",
+        "logins": 42
+      }
+    ],
+    "punishments": [
+      {
+        "id": "pun456",
+        "issuerName": "StaffMember",
+        "issued": "2024-01-12T14:00:00.000Z",
+        "started": "2024-01-12T14:00:00.000Z",
+        "typeOrdinal": 1,
+        "type": "MUTE",
+        "modifications": [],
+        "notes": [],
+        "evidence": [],
+        "attachedTicketIds": [],
+        "data": {
+          "typeName": "Chat Abuse"
+        }
+      }
+    ],
+    "pendingNotifications": []
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given UUID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

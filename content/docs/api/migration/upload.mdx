@@ -1,0 +1,65 @@
+---
+title: Upload Migration File
+description: Upload a migration JSON file for asynchronous processing.
+---
+
+## `POST` /v1/minecraft/migration/upload
+
+Upload a migration JSON file containing player and punishment data from another moderation system. The file is processed asynchronously after upload. Use the [Migration Progress](/docs/api/migration/progress) endpoint to track processing status.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `multipart/form-data`. |
+
+#### Form Data
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `migrationFile` | file | Yes | The migration JSON file to upload. |
+
+```
+POST /v1/minecraft/migration/upload
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="migrationFile"; filename="migration.json"
+Content-Type: application/json
+
+{ ... migration data ... }
+------FormBoundary--
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "Migration file uploaded successfully. Processing will begin shortly.",
+  "fileSize": 12345
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid file. The uploaded file is not valid JSON or has an incorrect format. |
+| `401` | Missing or invalid API key. |
+| `413` | File too large. The uploaded file exceeds the maximum allowed size. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

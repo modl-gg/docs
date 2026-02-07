@@ -1,0 +1,65 @@
+---
+title: Dismiss Report
+description: Dismiss a report.
+---
+
+## `POST` /v1/minecraft/reports/\{id\}/dismiss
+
+Dismiss a report, indicating that no further action is required. Optionally provide a reason and the name of the staff member who dismissed it.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | The unique identifier of the report. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `dismissedBy` | string | No | The name of the staff member dismissing the report. |
+| `reason` | string | No | The reason for dismissing the report. |
+
+```json
+{
+  "dismissedBy": "StaffMember",
+  "reason": "Insufficient evidence to take action."
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "success": true
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body. |
+| `401` | Missing or invalid API key. |
+| `404` | Report not found. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

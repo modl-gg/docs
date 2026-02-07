@@ -1,0 +1,76 @@
+---
+title: Get Player Tickets
+description: Retrieve all tickets created by a specific player.
+---
+
+## `GET` /v1/minecraft/tickets/player/\{uuid\}
+
+Retrieve all tickets created by a specific player, identified by their Minecraft UUID. Returns up to 50 tickets in reverse chronological order.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The Minecraft UUID of the player. |
+
+```
+GET /v1/minecraft/tickets/player/550e8400-e29b-41d4-a716-446655440000
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "tickets": [
+    {
+      "id": "ticket_abc123",
+      "type": "player",
+      "subject": "Player using fly hacks",
+      "status": "Open",
+      "priority": "high",
+      "creatorUuid": "550e8400-e29b-41d4-a716-446655440000",
+      "creatorName": "Notch",
+      "createdAt": "2024-01-15T12:00:00Z",
+      "updatedAt": "2024-01-15T12:30:00Z"
+    },
+    {
+      "id": "ticket_def456",
+      "type": "bug",
+      "subject": "Redstone not working in spawn area",
+      "status": "Closed",
+      "priority": "normal",
+      "creatorUuid": "550e8400-e29b-41d4-a716-446655440000",
+      "creatorName": "Notch",
+      "createdAt": "2024-01-10T08:00:00Z",
+      "updatedAt": "2024-01-11T14:00:00Z"
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid UUID format. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

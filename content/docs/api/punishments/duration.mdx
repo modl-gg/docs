@@ -1,0 +1,63 @@
+---
+title: Change Duration
+description: Modify the duration of an existing punishment.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/duration
+
+Modify the duration of an existing punishment. This can be used to extend, reduce, or convert a punishment between temporary and permanent.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to modify. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `issuerName` | string | Yes | The name of the staff member modifying the duration. |
+| `newDuration` | long | No | The new duration in milliseconds. Use `-1` for permanent. |
+
+```json title="Example Request Body"
+{
+  "issuerName": "StaffMember",
+  "newDuration": 1209600000
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "success": true
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | Whether the duration was updated successfully. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |

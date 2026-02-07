@@ -1,0 +1,82 @@
+---
+title: Get Linked Accounts
+description: Retrieve alt accounts detected via shared IP addresses.
+---
+
+## `GET` /v1/minecraft/players/\{uuid\}/linked-accounts
+
+Retrieve accounts that share IP addresses with the specified player. This is used for alt account detection and is limited to a maximum of 20 results.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "linkedAccounts": [
+    {
+      "_id": "65a1b2c3d4e5f6a7b8c9d0e2",
+      "minecraftUuid": "6a1e8400-e29b-41d4-a716-446655440001",
+      "usernames": [
+        {
+          "username": "AltAccount",
+          "date": "2024-01-10T08:00:00.000Z"
+        }
+      ],
+      "notes": [],
+      "ipList": [
+        {
+          "ipAddress": "192.168.1.1",
+          "country": "US",
+          "region": "California",
+          "asn": "AS12345",
+          "proxy": false,
+          "hosting": false,
+          "firstLogin": "2024-01-10T08:00:00.000Z",
+          "logins": 5
+        }
+      ],
+      "punishments": [],
+      "pendingNotifications": []
+    }
+  ]
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `linkedAccounts` | array | List of player profiles sharing IP addresses with the target player (max 20). Each entry follows the same profile structure as the [Get Player by UUID](/docs/api/players/get-by-uuid) endpoint. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given UUID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

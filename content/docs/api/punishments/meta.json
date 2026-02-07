@@ -1,0 +1,4 @@
+{
+  "title": "Punishments",
+  "pages": ["create", "create-dynamic", "recent", "types", "preview", "acknowledge", "pardon", "note", "evidence", "duration", "toggle"]
+}

@@ -1,0 +1,65 @@
+---
+title: Add Evidence
+description: Attach evidence to an existing punishment.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/evidence
+
+Attach evidence to an existing punishment record. Evidence can be any URL pointing to screenshots, videos, logs, or other supporting material.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The ID of the punishment to attach evidence to. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `issuerName` | string | Yes | The name of the staff member attaching the evidence. |
+| `evidenceUrl` | string | Yes | URL pointing to the evidence (screenshot, video, etc.). |
+
+```json title="Example Request Body"
+{
+  "issuerName": "StaffMember",
+  "evidenceUrl": "https://example.com/evidence/screenshot-2025-01-15.png"
+}
+```
+
+### Response
+
+#### 200 OK
+
+```json title="Response"
+{
+  "success": true,
+  "message": "Evidence attached successfully."
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `success` | boolean | Whether the evidence was attached successfully. |
+| `message` | string | A human-readable success message. |
+
+#### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body, missing required fields, or invalid URL. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found. |
