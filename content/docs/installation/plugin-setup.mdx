@@ -1,41 +1,49 @@
 ---
 title: Plugin Setup
-description: Download and install the modl plugin on your Minecraft server.
+description: Download and install the modl.gg plugin on your Minecraft server.
 ---
 
 ## Download the Plugin
 
-1. Log in to your modl panel at `yourserver.modl.gg`.
-2. Navigate to **Settings** and locate the plugin download section.
-3. Download the latest modl plugin JAR file.
+1. Log in to your modl.gg panel at `<yourserver>.modl.gg`.
+2. Visit a download source for modl.gg. We recommend [Modrinth](https://modrinth.com/plugin/modl).
+3. Download the latest modl.gg plugin JAR file.
 
 ## Platform-Specific Instructions
 
 ### Spigot (Paper, Purpur, etc.)
 
 1. Place the downloaded JAR file into your server's `plugins/` folder.
-2. Restart your server (a full restart is recommended over a reload).
+2. Restart your server (a full restart is required over a reload).
 3. The plugin will generate its configuration files on first startup.
+4. Input the API key into the config.yml, and make other necessary changes.
+5. Restart the server again, and you should be good to go.
 
 ### BungeeCord (Waterfall, etc.)
 
 1. Place the downloaded JAR file into your **proxy** server's `plugins/` folder.
 2. Restart your BungeeCord proxy.
 3. The plugin will generate its configuration files on first startup.
+4. Input the API key into the config.yml, and make other necessary changes.
+5. Restart the server again, and you should be good to go.
 
 ### Velocity
 
 1. Place the downloaded JAR file into your **Velocity proxy** server's `plugins/` folder.
 2. Restart your Velocity proxy.
 3. The plugin will generate its configuration files on first startup.
+4. Input the API key into the config.yml, and make other necessary changes.
+5. Restart the server again, and you should be good to go.
 
 ### Folia
 
-Folia is natively supported by modl. The setup process is the same as Spigot:
+Folia is natively supported by modl.gg! The setup process is the same as Spigot:
 
 1. Place the downloaded JAR file into your server's `plugins/` folder.
 2. Restart your server.
 3. The plugin will generate its configuration files on first startup.
+4. Input the API key into the config.yml, and make other necessary changes.
+5. Restart the server again, and you should be good to go.
 
 ## Verify Installation
 
@@ -45,4 +53,4 @@ After your server has restarted, verify the plugin is loaded correctly:
 2. If the plugin is installed correctly, you will see the modl command output with version information.
 3. Check the server logs for any errors related to modl during startup.
 
-If the plugin fails to load, ensure you are running Java 18 or higher and that the JAR file is not corrupted. Try re-downloading the plugin if issues persist.
+If the plugin fails to load, ensure you are running Java 8 or higher and that the JAR file is not corrupted. Try re-downloading the plugin. If issues persist, please contact support on [Discord](https://modl.gg/discord) or [email](mailto:support@modl.gg).
