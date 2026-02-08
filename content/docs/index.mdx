@@ -3,30 +3,52 @@ title: Introduction
 description: modl is an all-in-one Minecraft moderation platform featuring punishments, staff management, tickets, reports, AI moderation, and more.
 ---
 
-modl is a modern, all-in-one moderation platform built for Minecraft server networks. It replaces the patchwork of outdated plugins with a single, unified system — a web panel, an API, and a Minecraft plugin that all work together.
-
 ## Key Features
 
-- **Punishment System** — Points-based escalation with configurable types, durations, and severity levels. Supports bans, mutes, kicks, blacklists, and restrictions.
-- **Staff Management** — Role-based access control with granular permissions. Manage your team from the web panel.
-- **Tickets & Reports** — Players can create tickets and report others in-game. Staff review and resolve them from the panel.
-- **AI Chat Moderation** — Powered by Google Gemini, automatically detect and flag chat violations.
-- **Alt Account Detection** — IP-based linked account detection to catch ban evaders.
-- **Multi-Server Support** — A single panel manages multiple servers. Each server is isolated with its own data, staff, and configuration.
-- **Appeals** — Players can appeal punishments through the public web portal.
-- **Audit Logging** — Every staff action is logged for accountability.
+- **Fully custom** — Use your own domain, upload your own icons, change every message. No trace of modl.gg seen by players.
+- **Free & Open Source** — The software is your own: compile, modify, self-host, and fork to your heart's desire
+
+- **Dynamic Punishments** — Calculate punishment durations dynamically whilst embracing staff discretion and case-by-case judgement.
+> Social and gameplay point categories. Configurable point thresholds for low, medium, and habitual offender status in each.
+> Configure durations for punishment types depending on severity (lenient, regular, severe) and offender status. 
+> Show custom ban and mute messages for different punishment types
+> Upload evidence, link related report tickets, add staff notes, modify punishment durations, or pardon (remove points)
+> Easy appeal system w/ID, see all punishment details right in the ticket and make your judgement with one click
+> Full audit trail for all punishments, every action creates an immutable note.
+> Option to set up stat-wiping bans (runs a configured command when ban expires)
+> Issue special restrictions that ban a player until they change their username or skin (can still appeal the restriction).
+
+- **Intelligent Chat Reporting** — All reports open a ticket where players are notified of updates and can further respond
+> Chat reports automatically upload full-context chat log for reference
+> Staff can issue punishments directly from ticket page with a single click, or correspond with the reporter
+> When a punishment is issued, staff can link related reports to close each report and notify the reporters of punishment action taken.
+> Premium feature: AI will automatically analyze chat logs from reports and either automatically make a decision or show a suggested action.
+> * To use AI, you must describe the rule breaking offense(s) you want it to look for and link associated punishment type(s).
+
+- **Smart Alt Blocking** — Instead of IP-Banning, issue independent linked-bans for players suspected of being alternate accounts
+> Uses login-times (even failed ones that end up on a ban screen) to link accounts, even with VPN IPs, whilst keeping sibling accounts mostly unbanned
+> Each linked ban is independently appealable, if there was a mistake in linkage, easily reverse the mistake without changing the original ban.
+> Linked bans automatically expire/pardon/duration-change with the original ban unless otherwise pardoned itself.
+
+- **Data Analytics & Audit Logs** — Track punishment trends, ticket response times, player geolocation data, and much more.
+> See every punishment and ticket each staff member touches, rollback (pardon) punishments from a specific staff member
+> Analyze top performing staff, audit suspicious activity, identify trends in activity
+
+- **Staff Management** — Role-based access control with granular permissions. Link staff in-game accounts with panel accounts to sync permissions.
+> Staff receive (togglable) notifications in-game for all new tickets, reports, punishments, and ticket replies
+> Create/delete/modify roles and assign them tostaff members. Staff members with administrative permissions cannot affect others w/higher or same role.
+> No need to use Spigot/Bukkit permission nodes at all. 
+
+- **Efficient Ticketing System** — Use configurable quick-responses, forms, email & in-game notifications, and more to streamline ticketing.
+> Configure quick-responses linked to actions (ex: close ticket, punish reported player, pardon/change-duration-of appealed punishment)
+> Configure forms for players to fill out when submitting appeals (per punishment type), support tickets, bugreports, or staff applications
+> Send email and in-game notifications (held for offline players until they login) notifying of ticket reply w/link to ticket
+> Private staff conversation tab for staff to discuss tickets without players seeing.
+
+- **Homepage & Knowledgebase** — Configure homepage cards with links and knowledgebase articles
+> Put your server's rules, guides, terms of service, and any other document under your own domain.
+
 - **Developer API** — Full REST API for building integrations and custom tooling.
-
-## Architecture
-
-modl has four components:
-
-| Component | Description |
-|-----------|-------------|
-| **Minecraft Plugin** | Runs on your server (Spigot, BungeeCord, Velocity, or Folia). Enforces punishments, tracks players, and syncs with the API. |
-| **Web Panel** | Staff dashboard for managing punishments, tickets, reports, and server settings. |
-| **Public Portal** | Player-facing site for appeals and server information. |
-| **Backend API** | Central REST API that powers everything. Hosted at `api.modl.gg`. |
 
 ## Next Steps
 

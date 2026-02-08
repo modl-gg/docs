@@ -20,17 +20,15 @@ Before installing modl.gg, make sure you have the following:
 
 Getting modl.gg up and running involves four steps:
 
-1. **Register your server** on [modl.gg](https://modl.gg) and complete email verification.
-2. **Install the plugin JAR** on your Minecraft server.
-3. **Access the web panel** to manage your server, staff, and punishments.
-4. **Configure your API key** so the plugin can communicate with the modl.gg platform.
+1. **Download the latest version** of the Minecraft plugin at https://github.com/modl-gg/minecraft/releases
+2. **Install the plugin** on your Minecraft server or proxy. If you are using a Velocity or Bungeecord proxy, you MUST Install
+the plugin on this proxy and you CANNOT install it on the backend Spigot/Paper server. Only install on Spigot if you are not
+running a proxy. If you are using Velocity you should install [Signed Velocity](https://modrinth.com/plugin/signedvelocity) in order
+for chat messages to be cancelled properly.
+3. **Run your server** and let the config generate, then stop it once modl fully installs (the first run may take a while).
+4. **Register your server** on [modl.gg](https://modl.gg) and complete email verification.
+5. **Access the web panel** and navigate to Settings > Server & Billing > Server Config.
+6. **Generate an API key** and copy it into the modl Minecraft plugin's config.yml (also update the panel url). Do not share
+this API key with anyone as it grants full access to your modl panel!
+7. **Run your server** again and you are fully installed! Invite your other staff members and make the panel your own!
 
-Follow the guides below to complete each step.
-
-## Guides
-
-<Cards>
-  <Card title="Plugin Setup" href="/installation/plugin-setup" description="Download and install the modl.gg plugin on your Minecraft server." />
-  <Card title="Panel Access" href="/installation/panel-access" description="Access the modl.gg web panel and invite your staff." />
-  <Card title="API Key Configuration" href="/installation/api-key" description="Obtain and configure your API key for the modl.gg plugin." />
-</Cards>
