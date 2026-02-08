@@ -1,5 +1,5 @@
 {
-  "title": "API Reference",
+  "title": "Developer API",
   "defaultOpen": false,
   "pages": ["index", "...players", "...punishments", "...sync", "...notifications", "...tickets", "...reports", "...staff", "...roles", "...dashboard", "...migration"]
 }
