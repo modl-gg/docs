@@ -1,4 +1,5 @@
 {
   "title": "API Reference",
+  "defaultOpen": false,
   "pages": ["index", "...players", "...punishments", "...sync", "...notifications", "...tickets", "...reports", "...staff", "...roles", "...dashboard", "...migration"]
 }
