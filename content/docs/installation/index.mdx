@@ -21,14 +21,10 @@ Before installing modl.gg, make sure you have the following:
 Getting modl.gg up and running involves four steps:
 
 1. **Download the latest version** of the Minecraft plugin at https://github.com/modl-gg/minecraft/releases
-2. **Install the plugin** on your Minecraft server or proxy. If you are using a Velocity or Bungeecord proxy, you MUST Install
-the plugin on the proxy and you CANNOT install it on the backend Spigot/Paper server. Only install on Spigot/Paper if you are not
-running a proxy. If you are using Velocity you should install [Signed Velocity](https://modrinth.com/plugin/signedvelocity)
-for chat messages to be cancelled properly.
-3. **Run your server** and let the config generate, then stop it once modl fully installs (the first run may take a while).
-4. **Register your server** on [modl.gg](https://modl.gg) and complete email verification.
-5. **Access the web panel** and navigate to Settings > Server & Billing > Server Config.
-6. **Generate an API key** and copy it into the modl Minecraft plugin's config.yml. Do not share
-this key with anyone as it will grant them full access to your panel!
-7. **Run your server** again and you are fully installed! Invite your other staff members and make the panel your own!
-
+2. **Install the plugin** on all your Spigot servers and your Velocity/Bungeecord proxy (or just Spigot server if you aren't using a proxy).
+3. **Run your server** and wait for the setup wizard to show up in console. 
+4. **Follow the steps** in the setup wizard
+ - When installing in bridge-mode (spigot server behind proxy), you can grab the api-key from proxy plugin's boot.yml
+ - If you are using Pterodactyl and running a proxy, you will need to allocate port 25590 (or whatever TCP query port
+  you specified) to the proxy in order for the backend servers to connect.
+5. **Done!** Enjoy the plugin and [join our discord](https://modl.gg/discord) if you need any assistance or want to suggest features.
