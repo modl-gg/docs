@@ -1,0 +1,69 @@
+---
+title: Acknowledge Stat Wipe
+description: Acknowledge that a stat wipe has been executed on a server.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/stat-wipe-acknowledge
+
+Acknowledge that a stat wipe associated with a punishment has been executed on a game server. This marks the stat wipe as completed.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The unique ID of the punishment. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The punishment ID (must match the path parameter). |
+| `serverName` | string | No | The name of the server that executed the stat wipe. |
+| `success` | boolean | Yes | Whether the stat wipe was executed successfully. |
+
+```json
+{
+  "punishmentId": "abc123",
+  "serverName": "survival-1",
+  "success": true
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true,
+  "message": "Stat wipe acknowledged"
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request or stat wipe not applicable. |
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found for the given ID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

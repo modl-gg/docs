@@ -1,4 +1,4 @@
 {
   "title": "Punishments",
-  "pages": ["create", "create-dynamic", "recent", "types", "preview", "acknowledge", "pardon", "note", "evidence", "duration", "toggle"]
+  "pages": ["create", "create-dynamic", "get", "recent", "types", "preview", "acknowledge", "pardon", "note", "evidence", "duration", "toggle", "upload-token", "stat-wipe-acknowledge", "tickets"]
 }

@@ -1,0 +1,72 @@
+---
+title: Get Tickets by IDs
+description: Retrieve multiple tickets by their IDs in a single request.
+---
+
+## `POST` /v1/minecraft/tickets/by-ids
+
+Retrieve multiple tickets by providing a list of ticket IDs. This is useful for batch lookups when you need details for several tickets at once.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `ids` | string[] | Yes | Array of ticket IDs to look up (max 100). Must not be empty. |
+
+```json
+{
+  "ids": ["ticket_abc123", "ticket_def456", "ticket_ghi789"]
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "tickets": [
+    {
+      "id": "ticket_abc123",
+      "type": "player_report",
+      "subject": "Player using fly hacks",
+      "status": "open",
+      "createdAt": 1699000000000
+    },
+    {
+      "id": "ticket_def456",
+      "type": "bug_report",
+      "subject": "Block duplication glitch",
+      "status": "closed",
+      "createdAt": 1699100000000
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or empty IDs list. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

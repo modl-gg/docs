@@ -1,0 +1,69 @@
+---
+title: Submit IP Info
+description: Submit IP geolocation information for a player.
+---
+
+## `POST` /v1/minecraft/players/submit-ip-info
+
+Submit IP geolocation and proxy detection information for a player. This data is used for alt account detection and security analysis.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `minecraftUUID` | string | Yes | The player's Minecraft UUID. |
+| `ip` | string | Yes | The player's IP address. |
+| `country` | string | No | The country associated with the IP address. |
+| `region` | string | No | The region/state associated with the IP address. |
+| `asn` | string | No | The autonomous system number (ASN) of the IP. |
+| `proxy` | boolean | Yes | Whether the IP is detected as a proxy. |
+| `hosting` | boolean | Yes | Whether the IP is detected as a hosting provider. |
+
+```json
+{
+  "minecraftUUID": "550e8400-e29b-41d4-a716-446655440000",
+  "ip": "192.168.1.1",
+  "country": "US",
+  "region": "California",
+  "asn": "AS12345",
+  "proxy": false,
+  "hosting": false
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

@@ -1,11 +1,11 @@
 ---
-title: Player Disconnect
-description: Report a player disconnection from the server.
+title: Update Server
+description: Update a player's current server.
 ---
 
-## `POST` /v1/minecraft/players/disconnect
+## `POST` /v1/minecraft/players/update-server
 
-Report that a player has disconnected from your Minecraft server. This updates the player's online status and records their last logout time.
+Update the server a player is currently connected to. This is used to track which server a player is on for cross-server features.
 
 ### Authentication
 
@@ -29,12 +29,12 @@ X-API-Key: your-api-key-here
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `minecraftUuid` | string | Yes | The player's Minecraft UUID. |
-| `sessionDurationMs` | long | Yes | The duration of the player's session in milliseconds (min: 0). |
+| `serverName` | string | Yes | The name of the server the player is now on. Must not be blank. |
 
 ```json
 {
   "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
-  "sessionDurationMs": 3600000
+  "serverName": "survival-2"
 }
 ```
 
@@ -55,5 +55,6 @@ X-API-Key: your-api-key-here
 |---|---|
 | `400` | Invalid request body or missing required fields. |
 | `401` | Missing or invalid API key. |
+| `404` | Player not found for the given UUID. |
 | `429` | Rate limit exceeded. |
 | `500` | Internal server error. |

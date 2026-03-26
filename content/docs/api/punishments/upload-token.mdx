@@ -1,11 +1,11 @@
 ---
-title: Create Player Note
-description: Add a note to a player's record.
+title: Create Upload Token
+description: Create an upload token for punishment evidence.
 ---
 
-## `POST` /v1/minecraft/players/\{uuid\}/notes
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/upload-token
 
-Add a staff note to a player's record. Notes are stored permanently and visible to all staff members with access to the player's profile.
+Create a temporary upload token that can be used to upload evidence files for a specific punishment.
 
 ### Authentication
 
@@ -28,19 +28,17 @@ X-API-Key: your-api-key-here
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `uuid` | string | Yes | The player's Minecraft UUID. |
+| `punishmentId` | string | Yes | The unique ID of the punishment. |
 
 #### Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `text` | string | Yes | The note content. Must not be blank. |
-| `issuerName` | string | No | The name of the staff member creating the note. |
-| `issuerId` | string | No | The unique identifier of the staff member creating the note. |
+| `issuerName` | string | No | The name of the staff member requesting the token. |
+| `issuerId` | string | No | The unique identifier of the staff member. |
 
 ```json
 {
-  "text": "Player was warned verbally about chat behavior",
   "issuerName": "StaffMember",
   "issuerId": "staff_abc123"
 }
@@ -53,8 +51,7 @@ X-API-Key: your-api-key-here
 ```json
 {
   "status": 200,
-  "success": true,
-  "message": "Note added"
+  "token": "upload_token_xyz789"
 }
 ```
 
@@ -62,8 +59,7 @@ X-API-Key: your-api-key-here
 
 | Status Code | Description |
 |---|---|
-| `400` | Invalid request body. `text` and `issuerName` must not be blank. |
 | `401` | Missing or invalid API key. |
-| `404` | Player not found for the given UUID. |
+| `404` | Punishment not found for the given ID. |
 | `429` | Rate limit exceeded. |
 | `500` | Internal server error. |

@@ -1,4 +1,4 @@
 {
   "title": "Tickets",
-  "pages": ["create", "create-unfinished", "list", "get", "player-tickets", "claim"]
+  "pages": ["create", "create-unfinished", "list", "get", "player-tickets", "claim", "by-ids"]
 }

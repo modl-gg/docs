@@ -1,0 +1,68 @@
+---
+title: Get Command Logs
+description: Retrieve a player's command log history.
+---
+
+## `GET` /v1/minecraft/players/\{uuid\}/command-logs
+
+Retrieve command log entries for a specific player, ordered by most recent.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `limit` | integer | No | The maximum number of entries to return (min: 1, max: 500). Defaults to `200`. |
+
+#### Example
+
+```
+GET /v1/minecraft/players/550e8400-e29b-41d4-a716-446655440000/command-logs?limit=100
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "entries": [
+    {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "Notch",
+      "command": "/gamemode creative",
+      "timestamp": 1699000000000,
+      "server": "survival-1"
+    }
+  ]
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

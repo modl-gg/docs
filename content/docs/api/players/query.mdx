@@ -28,11 +28,12 @@ X-API-Key: your-api-key-here
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `minecraftUuid` | string | Yes | The player's Minecraft UUID. |
+| `queryMojang` | boolean | No | Whether to query Mojang if the player is not found locally. Defaults to `true`. |
 
 #### Example
 
 ```
-GET /v1/minecraft/players?minecraftUuid=550e8400-e29b-41d4-a716-446655440000
+GET /v1/minecraft/players?minecraftUuid=550e8400-e29b-41d4-a716-446655440000&queryMojang=true
 ```
 
 ### Response

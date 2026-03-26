@@ -1,0 +1,73 @@
+---
+title: Upload Replay
+description: Initialize a replay file upload.
+---
+
+## `POST` /v1/minecraft/replays/upload
+
+Initialize a replay file upload. Returns an upload URL and required headers that should be used to upload the actual replay file to the storage provider.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `mcVersion` | string | Yes | The Minecraft version the replay was recorded on. Must not be blank. |
+| `fileSize` | long | Yes | The size of the replay file in bytes. Must be a positive number. |
+
+```json
+{
+  "mcVersion": "1.20.4",
+  "fileSize": 15728640
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "replayId": "replay_abc123",
+  "uploadUrl": "https://storage.example.com/upload/replay_abc123",
+  "method": "PUT",
+  "requiredHeaders": {
+    "Content-Type": "application/octet-stream"
+  }
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `replayId` | string | The unique ID assigned to this replay. Use this to confirm the upload. |
+| `uploadUrl` | string | The URL to upload the replay file to. |
+| `method` | string | The HTTP method to use for the upload (e.g., `PUT`). |
+| `requiredHeaders` | object | Headers that must be included when uploading the file. |
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

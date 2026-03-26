@@ -1,0 +1,70 @@
+---
+title: Submit Chat Logs
+description: Submit a batch of player chat log entries.
+---
+
+## `POST` /v1/minecraft/players/chat-log
+
+Submit a batch of chat log entries from your server. Each entry records a chat message sent by a player.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | array | Yes | Array of chat log entries (max 500). Must not be empty. |
+
+Each entry in the `entries` array:
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `uuid` | string | Yes | The player's Minecraft UUID. |
+| `username` | string | Yes | The player's Minecraft username. |
+| `message` | string | Yes | The chat message content. |
+| `timestamp` | long | Yes | The Unix timestamp of the message in milliseconds (min: 0). |
+| `server` | string | No | The server where the message was sent. |
+
+```json
+{
+  "entries": [
+    {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "username": "Notch",
+      "message": "Hello world!",
+      "timestamp": 1699000000000,
+      "server": "survival-1"
+    }
+  ]
+}
+```
+
+### Response
+
+#### `200 OK`
+
+An empty response body indicates the chat logs were submitted successfully.
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

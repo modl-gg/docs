@@ -33,12 +33,17 @@ X-API-Key: your-api-key-here
 | `minecraftUUID` | string | Yes | The player's UUID in standard format (e.g., `550e8400-e29b-41d4-a716-446655440000`). |
 | `username` | string | Yes | The player's current Minecraft username. |
 | `ip` | string | Yes | The player's IP address. |
+| `ipInfo` | object | No | IP geolocation information (e.g., country, region, ASN). |
+| `skinHash` | string | No | The hash of the player's current skin. |
+| `serverName` | string | No | The name of the server the player is joining. |
 
 ```json
 {
   "minecraftUUID": "550e8400-e29b-41d4-a716-446655440000",
   "username": "Notch",
-  "ip": "192.168.1.1"
+  "ip": "192.168.1.1",
+  "skinHash": "a1b2c3d4e5f6",
+  "serverName": "survival-1"
 }
 ```
 

@@ -1,4 +1,4 @@
 {
   "title": "Staff",
-  "pages": ["list", "permissions", "update-role"]
+  "pages": ["list", "permissions", "update-role", "disconnect", "2fa-generate"]
 }

@@ -1,11 +1,11 @@
 ---
-title: Player Disconnect
-description: Report a player disconnection from the server.
+title: Staff Disconnect
+description: Report a staff member disconnection from the server.
 ---
 
-## `POST` /v1/minecraft/players/disconnect
+## `POST` /v1/minecraft/staff/disconnect
 
-Report that a player has disconnected from your Minecraft server. This updates the player's online status and records their last logout time.
+Report that a staff member has disconnected from your Minecraft server. This updates the staff member's online status and records their session duration.
 
 ### Authentication
 
@@ -28,13 +28,13 @@ X-API-Key: your-api-key-here
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `minecraftUuid` | string | Yes | The player's Minecraft UUID. |
-| `sessionDurationMs` | long | Yes | The duration of the player's session in milliseconds (min: 0). |
+| `minecraftUuid` | string | Yes | The staff member's Minecraft UUID. |
+| `sessionDurationMs` | long | Yes | The duration of the staff member's session in milliseconds (min: 0). |
 
 ```json
 {
   "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
-  "sessionDurationMs": 3600000
+  "sessionDurationMs": 7200000
 }
 ```
 
@@ -55,5 +55,6 @@ X-API-Key: your-api-key-here
 |---|---|
 | `400` | Invalid request body or missing required fields. |
 | `401` | Missing or invalid API key. |
+| `404` | Staff member not found. |
 | `429` | Rate limit exceeded. |
 | `500` | Internal server error. |

@@ -25,8 +25,9 @@ Requires the `X-API-Key` header with your server's API key.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `targetUuid` | string | Yes | The UUID of the player to punish. |
-| `issuerName` | string | Yes | The name of the staff member issuing the punishment. |
-| `typeOrdinal` | integer | Yes | The punishment type ordinal (0-14). |
+| `issuerName` | string | No | The name of the staff member issuing the punishment. |
+| `issuerId` | string | No | The unique identifier of the staff member issuing the punishment. |
+| `type_ordinal` | integer | Yes | The punishment type ordinal (min: 0). |
 | `reason` | string | No | The reason for the punishment. |
 | `duration` | long | No | Duration in milliseconds. Use `-1` for permanent. |
 | `data` | object | No | Additional data to attach to the punishment. |
@@ -39,7 +40,8 @@ Requires the `X-API-Key` header with your server's API key.
 {
   "targetUuid": "069a79f4-44e9-4726-a5be-fca90e38aaf5",
   "issuerName": "StaffMember",
-  "typeOrdinal": 7,
+  "issuerId": "staff_abc123",
+  "type_ordinal": 7,
   "reason": "Use of unauthorized client modifications",
   "duration": 604800000,
   "severity": "regular",

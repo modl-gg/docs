@@ -1,11 +1,11 @@
 ---
-title: Player Disconnect
-description: Report a player disconnection from the server.
+title: Generate 2FA Token
+description: Generate a two-factor authentication verification token for a staff member.
 ---
 
-## `POST` /v1/minecraft/players/disconnect
+## `POST` /v1/minecraft/staff/2fa/generate
 
-Report that a player has disconnected from your Minecraft server. This updates the player's online status and records their last logout time.
+Generate a two-factor authentication token for a staff member. The token and verification URL are returned so the staff member can complete the 2FA verification process.
 
 ### Authentication
 
@@ -28,13 +28,13 @@ X-API-Key: your-api-key-here
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `minecraftUuid` | string | Yes | The player's Minecraft UUID. |
-| `sessionDurationMs` | long | Yes | The duration of the player's session in milliseconds (min: 0). |
+| `minecraftUuid` | string | Yes | The staff member's Minecraft UUID. |
+| `ip` | string | Yes | The staff member's current IP address. |
 
 ```json
 {
   "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
-  "sessionDurationMs": 3600000
+  "ip": "192.168.1.1"
 }
 ```
 
@@ -44,8 +44,8 @@ X-API-Key: your-api-key-here
 
 ```json
 {
-  "status": 200,
-  "success": true
+  "token": "abc123xyz",
+  "verifyUrl": "https://panel.example.com/verify/abc123xyz"
 }
 ```
 
@@ -53,7 +53,7 @@ X-API-Key: your-api-key-here
 
 | Status Code | Description |
 |---|---|
-| `400` | Invalid request body or missing required fields. |
 | `401` | Missing or invalid API key. |
+| `404` | Staff member not found. |
 | `429` | Rate limit exceeded. |
 | `500` | Internal server error. |

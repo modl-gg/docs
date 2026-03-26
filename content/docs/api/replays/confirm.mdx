@@ -1,0 +1,57 @@
+---
+title: Confirm Replay Upload
+description: Confirm that a replay file upload is complete.
+---
+
+## `POST` /v1/minecraft/replays/confirm/\{replayId\}
+
+Confirm that a replay file has been successfully uploaded to the storage provider. This should be called after the file has been uploaded using the URL returned by the [Upload Replay](/docs/api/replays/upload) endpoint.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `replayId` | string | Yes | The replay ID returned from the upload initialization. |
+
+#### Example
+
+```
+POST /v1/minecraft/replays/confirm/replay_abc123
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true,
+  "message": "Upload confirmed"
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Upload verification failed. The file may not have been uploaded or is corrupted. |
+| `401` | Missing or invalid API key. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

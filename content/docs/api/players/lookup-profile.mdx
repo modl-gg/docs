@@ -1,0 +1,81 @@
+---
+title: Lookup Profile
+description: Detailed player profile lookup by UUID or username.
+---
+
+## `POST` /v1/minecraft/players/lookup-profile
+
+Perform a detailed player profile lookup. Accepts a UUID or username query and returns the full player profile including punishments and notes with optional pagination limits.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentLimit` | integer | No | Maximum number of punishments to return. |
+| `noteLimit` | integer | No | Maximum number of notes to return. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `query` | string | Yes | The player's UUID or username to look up. Must not be blank. |
+| `queryMojang` | boolean | No | Whether to query Mojang if the player is not found locally. Defaults to `true`. |
+
+```json
+{
+  "query": "Notch",
+  "queryMojang": true
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "message": "Player found",
+  "player": {
+    "_id": "65a1b2c3d4e5f6a7b8c9d0e1",
+    "minecraftUuid": "550e8400-e29b-41d4-a716-446655440000",
+    "usernames": [
+      {
+        "username": "Notch",
+        "date": "2024-01-15T10:30:00.000Z"
+      }
+    ],
+    "notes": [],
+    "ipList": [],
+    "punishments": [],
+    "pendingNotifications": []
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `400` | Invalid request body or missing required fields. |
+| `401` | Missing or invalid API key. |
+| `404` | Player not found for the given query. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |

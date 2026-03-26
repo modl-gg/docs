@@ -1,0 +1,72 @@
+---
+title: Modify Punishment Tickets
+description: Add or remove tickets linked to a punishment.
+---
+
+## `POST` /v1/minecraft/punishments/\{punishmentId\}/tickets
+
+Modify the tickets linked to a specific punishment. You can add new ticket associations, remove existing ones, or both in a single request.
+
+### Authentication
+
+Requires the `X-API-Key` header with your server's API key.
+
+```
+X-API-Key: your-api-key-here
+```
+
+### Request
+
+#### Headers
+
+| Header | Type | Required | Description |
+|---|---|---|---|
+| `X-API-Key` | string | Yes | Your server's API key. |
+| `Content-Type` | string | Yes | Must be `application/json`. |
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `punishmentId` | string | Yes | The unique ID of the punishment. |
+
+#### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `addTicketIds` | string[] | No | List of ticket IDs to link to this punishment. |
+| `removeTicketIds` | string[] | No | List of ticket IDs to unlink from this punishment. |
+| `modifyAssociatedTickets` | boolean | Yes | Whether to also update the tickets themselves with the punishment association. |
+| `issuerName` | string | No | The name of the staff member making the change. |
+| `issuerId` | string | No | The unique identifier of the staff member. |
+
+```json
+{
+  "addTicketIds": ["ticket_abc123", "ticket_def456"],
+  "removeTicketIds": [],
+  "modifyAssociatedTickets": true,
+  "issuerName": "StaffMember",
+  "issuerId": "staff_abc123"
+}
+```
+
+### Response
+
+#### `200 OK`
+
+```json
+{
+  "status": 200,
+  "success": true,
+  "message": "Punishment tickets modified"
+}
+```
+
+### Error Responses
+
+| Status Code | Description |
+|---|---|
+| `401` | Missing or invalid API key. |
+| `404` | Punishment not found for the given ID. |
+| `429` | Rate limit exceeded. |
+| `500` | Internal server error. |
